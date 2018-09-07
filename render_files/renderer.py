@@ -6,13 +6,13 @@ from typing import List  # , Dict
 
 
 class Renderer:
-    def __init__(self, screen_width: int=80, screen_height: int=50, font_path: str="fonts/arial12x12.png",
+    def __init__(self, screen_width: int=80, screen_height: int=50, font_path: str="fonts/arial10x10.png",
                  game_fullscreen: bool=False):
         self.screen_width: int = screen_width
         self.screen_height: int = screen_height
         self.game_fullscreen: bool = game_fullscreen
         # other values are set to default
-        self.game_size = 2
+        self.game_size = 1
         self.game_font = Font.ARIAL
         self.display_icon: IconDisplay = IconDisplay.ICON
         # Creates libtcod root console
@@ -30,7 +30,8 @@ class Renderer:
     def toggle_fullscreen(self):
         self.game_fullscreen = not self.game_fullscreen
         # libtcod.console_set_fullscreen(self.game_fullscreen)
-        libtcod.console_delete(0)
+        # libtcod.console_delete(0)
+        libtcod.sys_shutdown()
         libtcod.console_init_root(w=self.screen_width, h=self.screen_height, title=GAME_NAME,
                                   fullscreen=self.game_fullscreen)
 
@@ -50,7 +51,8 @@ class Renderer:
         self.update_root_console()
 
     def update_root_console(self):
-        libtcod.console_delete(0)
+        # libtcod.console_delete(0)
+        libtcod.sys_shutdown()
         font_path = "fonts/" + GAME_FONTS.get(self.game_font, [])[self.game_size]
         libtcod.console_set_custom_font(fontFile=font_path,
                                         flags=libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
